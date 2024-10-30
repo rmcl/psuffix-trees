@@ -16,19 +16,6 @@ dataset = [
     ...
 ]
 
-```
-
-### Any sequence that is iterable is acceptable
-
-Setup your dataset of sequences/
-```
-dataset = [
-    "VHDEFAZDEFABGNVbEFKJaSAHDHD",
-    "BN",
-    "CTCQMTJcO",
-    ...
-]
-
 from pypst import PST
 
 pst = PST(
@@ -42,6 +29,18 @@ pst = PST(
 pst.fit(dataset)
 
 pst.tree
+```
+
+### Any sequence that is iterable is acceptable
+
+Setup your dataset of sequences/
+```
+dataset = [
+    "VHDEFAZDEFABGNVbEFKJaSAHDHD",
+    "BN",
+    "CTCQMTJcO",
+    ...
+]
 ```
 
 Your dataset entries can be any sequence whether its string, list or tuple.
