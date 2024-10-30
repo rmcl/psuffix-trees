@@ -8,6 +8,8 @@ This port is an implementation probabilistic suffix trees by Ron, Singer and Tis
 
 ### Simple Example
 
+You'll need a dataset of sequences. There is a nice example in `pypst/fixtures/output_symbols.json` if you want something to play around with.
+
 ```
 dataset = [
     "VHDEFAZDEFABGNVbEFKJaSAHDHD",
@@ -33,7 +35,7 @@ pst.tree
 
 ### Any sequence that is iterable is acceptable
 
-Setup your dataset of sequences/
+Setup your dataset of sequences
 ```
 dataset = [
     "VHDEFAZDEFABGNVbEFKJaSAHDHD",
