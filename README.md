@@ -1,6 +1,6 @@
-# PyPST
+# psuffix-trees
 
-A Python port of the Matlab probabilistic suffix trees library by Markowitz (https://github.com/jmarkow/pst)
+A Python port of the Matlab probabilistic suffix trees and automata library by Markowitz (https://github.com/jmarkow/pst)
 
 This port is an implementation probabilistic suffix trees by Ron, Singer and Tishby 1996.
 
