@@ -1,4 +1,5 @@
 import json
+import pytest
 import numpy as np
 from transition_mat import (
     build_transition_matrix,
@@ -42,7 +43,7 @@ def test_compare_example_pst():
     assert len(transition_matrix['alphabet']) == len(alphabet), "The alphabet length does not match the expected length."
 
     assert np.allclose(
-        transition_matrix['occurrence_mats'][0],
+        transition_matrix['occurrence_mats'][0].to_dense(),
         np.array([1959, 1675, 1468, 2992, 1938, 2035, 790, 1494, 889, 2121, 3214, 736, 2230, 614, 579, 270, 1907, 575, 950, 3205, 529, 121, 3, 1705, 801, 1385, 1223, 1249, 619, 1013])
     ), "The zero order values do not match the expected values."
 
@@ -57,6 +58,7 @@ def test_compare_example_pst():
 
     assert len(generated_tree) == len(tree), f"Generated tree len: {len(generated_tree)} does not match expected tree len: {len(tree)}"
 
+    print(generated_tree[2]['string'])
     assert generated_tree[2]['string'] == [
         [7, 3],
         [5, 10],
@@ -72,3 +74,6 @@ def test_compare_example_pst():
     assert generated_tree[2]['parent'] == [
         (3, 1), (10, 1), (10, 1), (10, 1), (17, 1), (17, 1), (17, 1), (22, 1), (23, 1)
     ]
+
+if __name__ == '__main__':
+    pytest.main()
