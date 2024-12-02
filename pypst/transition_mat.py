@@ -1,5 +1,6 @@
 from typing import List, Dict
 import numpy as np
+import torch
 
 def convert_sequence_to_indexes(alphabet, sequence):
     """Convert a sequence of characters to their corresponding indexes in the alphabet."""
@@ -57,8 +58,16 @@ def build_transition_matrix(
 
     alphabet_length = len(alphabet)
 
+    """
     occurrence_mats = [
         np.zeros((alphabet_length,) * (i+1), dtype=np.uint16)
+        for i in range(order + 1)
+    ]"""
+
+    # Create a dictionary of all the non-zero counts we find
+    # indexed by order, then by the tuple of co-occuring syllables
+    occurence_mats_counts = [
+        {}
         for i in range(order + 1)
     ]
 
@@ -93,7 +102,32 @@ def build_transition_matrix(
                 next_order_syllables_alphabet_index = alphabet.index(next_order_item)
 
                 co_occuring_indexes.append(next_order_syllables_alphabet_index)
-                occurrence_mats[cur_order][tuple(co_occuring_indexes)] += 1
+
+                cur_mat_index = tuple(co_occuring_indexes)
+                occurence_mats_counts[cur_order][cur_mat_index] = \
+                    occurence_mats_counts[cur_order].get(cur_mat_index, 0) + 1
+
+
+    # Convert the dictionary of counts to a list of sparse tensors
+    occurrence_mats = []
+    for i in range(order + 1):
+        shape = (alphabet_length,) * (i+1)
+
+        indices = []
+        values = []
+
+        for key, value in occurence_mats_counts[i].items():
+            indices.append(key)
+            values.append(value)
+
+            assert len(shape) == len(key), "The shape of the key should match the order of the matrix"
+
+        indices = torch.tensor(indices, dtype=torch.long)
+        values = torch.tensor(values, dtype=torch.int32)
+
+        occurrence_mats.append(
+            torch.sparse_coo_tensor(indices.t(), values, size=shape)
+        )
 
     return {
         "occurrence_mats": occurrence_mats,
