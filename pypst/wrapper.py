@@ -4,6 +4,7 @@ from pypst.transition_mat import (
     build_alphabet_from_dataset
 )
 from pypst.pst_learn import pst_learn
+from pypst.pst_to_pfa import pst_convert_to_pfa
 
 class PST:
     """Create a probabilistic suffix tree (PST) from a dataset."""
@@ -72,3 +73,11 @@ class PST:
             raise ValueError("The model has not been fitted yet. Please call the 'fit' method first.")
 
         return self._pst
+
+    @property
+    def pfa(self):
+        """Convert the PST to a probabilistic finite automaton (PFA)"""
+        if not hasattr(self, '_pst'):
+            raise ValueError("The model has not been fitted yet. Please call the 'fit' method first.")
+
+        return pst_convert_to_pfa(self._pst)
