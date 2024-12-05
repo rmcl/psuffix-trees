@@ -4,6 +4,14 @@ A Python port of the Matlab probabilistic suffix trees and automata library by M
 
 This port is an implementation probabilistic suffix trees by Ron, Singer and Tishby 1996.
 
+## Installation
+
+You can install from pypi using the following:
+
+```
+pip install psuffix-trees
+```
+
 ## How to use
 
 ### Simple Example
